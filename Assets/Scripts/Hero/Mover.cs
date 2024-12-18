@@ -7,6 +7,8 @@ public class Mover : MonoBehaviour
     
     [SerializeField, Min(0.1f)] private float _speed;
     [SerializeField, Min(5f)] private float _jumpForce;
+    [SerializeField] private Transform _groundCheck;
+    [SerializeField] private LayerMask _ground;
     
     public event Action Moving;
     public event Action Stoping;
@@ -15,10 +17,12 @@ public class Mover : MonoBehaviour
     private Rigidbody2D _rigidBody2D;
 
     private float _minSpeed = 0.1f;
+    private float _groundCheckRadius = 0.3f;
 
     private Vector2 _inputVector;
     
     private bool _isRight = true;
+    private bool _onGround = true;
 
     private void Awake()
     {
@@ -29,14 +33,14 @@ public class Mover : MonoBehaviour
     {
         Move();
         Jump();
-        Reflect();
+        CheckGround();
     }
 
     private void Jump()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && _onGround)
         {
-            _rigidBody2D.AddForce(Vector2.up * _jumpForce);
+            _rigidBody2D.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
         }
     }
 
@@ -63,8 +67,8 @@ public class Mover : MonoBehaviour
         }
     }
 
-    private void Reflect()
+    private void CheckGround()
     {
-        
+        _onGround = Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _ground);
     }
 }
