@@ -36,12 +36,15 @@ public class Mover : MonoBehaviour
     {
         _coroutine = StartCoroutine(CheckingGround());
     }
-    
+
+    private void Update()
+    {
+        Jump();
+    }
 
     private void FixedUpdate()
     {
         Move();
-        Jump();
     }
     
     private void OnDestroy()

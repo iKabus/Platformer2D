@@ -9,8 +9,8 @@ public class HeroAnimation : MonoBehaviour
     private Mover _mover;
     private Animator _animator;
     
-    private int _isRunningHash = Animator.StringToHash("isRunning");
-    private int _isStopHash = Animator.StringToHash("isStop");
+    private int _isRunningHash = Animator.StringToHash("IsRunning");
+    private int _isStopHash = Animator.StringToHash("IsStop");
 
     private void Awake()
     {
