@@ -3,18 +3,20 @@ using UnityEngine;
 [RequireComponent (typeof(InputReader))]
 [RequireComponent (typeof(Mover))]
 [RequireComponent (typeof(GroundDetector))]
-
+[RequireComponent (typeof(Jumper))]
 public class Hero : MonoBehaviour
 {
     private GroundDetector _groundDetector;
     private InputReader _inputReader;
     private Mover _mover;
+    private Jumper _jumper;
 
-    private void Start()
+    private void Awake()
     {
         _groundDetector = GetComponent<GroundDetector>();
         _inputReader = GetComponent<InputReader>();
         _mover = GetComponent<Mover>();
+        _jumper = GetComponent<Jumper>();
     }
 
     private void FixedUpdate()
@@ -26,7 +28,7 @@ public class Hero : MonoBehaviour
 
         if(_inputReader.GetIsJump() && _groundDetector.IsGround)
         {
-            _mover.Jump();
+            _jumper.Jump();
         }
     }
 }

@@ -3,8 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Mover))]
 [RequireComponent(typeof(Animator))]
-
-public class HeroAnimation : MonoBehaviour
+public class HeroAnimator : MonoBehaviour
 {
     private Mover _mover;
     private Animator _animator;
@@ -22,14 +21,12 @@ public class HeroAnimation : MonoBehaviour
     {
         _mover.Moving += Run;
         _mover.Stoping += Stop;
-        _mover.Reflecting += Reflect;
     }
 
     private void OnDisable()
     {
         _mover.Moving -= Run;
         _mover.Stoping -= Stop;
-        _mover.Reflecting -= Reflect;
     }
 
     private void Run()
@@ -40,12 +37,5 @@ public class HeroAnimation : MonoBehaviour
     private void Stop()
     {
         _animator.SetTrigger(_isStopHash);
-    }
-
-    private void Reflect()
-    {
-        int direction = -1;
-        
-        transform.localScale *= new Vector2(direction,1);
     }
 }

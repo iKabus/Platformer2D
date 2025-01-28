@@ -5,7 +5,6 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
     [SerializeField, Min(0.1f)] private float _speed;
-    [SerializeField, Min(5f)] private float _jumpForce;
 
     public event Action Moving;
     public event Action Stoping;
@@ -20,11 +19,6 @@ public class Mover : MonoBehaviour
     private void Awake()
     {
         _rigidBody2D = GetComponent<Rigidbody2D>();
-    }
-
-    public void Jump()
-    {
-        _rigidBody2D.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }
 
     public void Move(float direction)
