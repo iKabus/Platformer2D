@@ -1,22 +1,35 @@
 using UnityEngine;
 
-[RequireComponent (typeof(InputReader))]
-[RequireComponent (typeof(Mover))]
-[RequireComponent (typeof(GroundDetector))]
-[RequireComponent (typeof(Jumper))]
+[RequireComponent(typeof(InputReader))]
+[RequireComponent(typeof(Mover))]
+[RequireComponent(typeof(Jumper))]
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(AttackOnApproach))]
 public class Hero : MonoBehaviour
 {
-    private GroundDetector _groundDetector;
     private InputReader _inputReader;
     private Mover _mover;
     private Jumper _jumper;
+    private Health _health;
+    private AttackOnApproach _attackOnApproach;
 
     private void Awake()
     {
-        _groundDetector = GetComponent<GroundDetector>();
         _inputReader = GetComponent<InputReader>();
         _mover = GetComponent<Mover>();
         _jumper = GetComponent<Jumper>();
+        _health = GetComponent<Health>();
+        _attackOnApproach = GetComponent<AttackOnApproach>();
+    }
+
+    private void OnEnable()
+    {
+        _inputReader.Jumping += Jump;
+    }
+
+    private void OnDisable()
+    {
+        _inputReader.Jumping -= Jump;
     }
 
     private void FixedUpdate()
@@ -25,10 +38,10 @@ public class Hero : MonoBehaviour
         {
             _mover.Move(_inputReader.Direction);
         }
+    }
 
-        if(_inputReader.GetIsJump() && _groundDetector.IsGround)
-        {
-            _jumper.Jump();
-        }
+    private void Jump()
+    {
+        _jumper.Jump();
     }
 }

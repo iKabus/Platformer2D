@@ -1,44 +1,22 @@
-using System.Collections;
 using UnityEngine;
 
 public class GroundDetector : MonoBehaviour
 {
-    [SerializeField] private Transform _groundCheck;
-    [SerializeField] private LayerMask _ground;
-    
     public bool IsGround { get; private set; }
 
-    private Coroutine _coroutine;
-
-    private float _groundCheckRadius = 0.3f;
-
-    private void Start()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        _coroutine = StartCoroutine(CheckingGround());
-    }
-
-    private void OnDestroy()
-    {
-        if (_coroutine != null)
+        if (collision.gameObject.TryGetComponent<Ground>(out _))
         {
-            StopCoroutine(_coroutine);
+            IsGround = true;
         }
     }
 
-    private IEnumerator CheckingGround()
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        var wait = new WaitForSeconds(0.1f);
-
-        while (enabled)
+        if (collision.gameObject.TryGetComponent<Ground>(out _))
         {
-            CheckGround();
-
-            yield return wait;
+            IsGround = false;
         }
-    }
-
-    private void CheckGround()
-    {
-        IsGround = Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _ground);
     }
 }

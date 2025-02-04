@@ -1,29 +1,29 @@
+using System;
 using UnityEngine;
 
+[RequireComponent(typeof(GroundDetector))]
 public class InputReader : MonoBehaviour
 {
     public const string CommandHorizontal = "Horizontal";
 
-    private bool _isJump;
+    public event Action Jumping;
 
     public float Direction { get; private set; } = 0;
+
+    private GroundDetector _groundDetector;
+
+    private void Awake()
+    {
+        _groundDetector = GetComponent<GroundDetector>();
+    }
 
     private void Update()
     {
         Direction = Input.GetAxis(CommandHorizontal);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && _groundDetector.IsGround)
         {
-            _isJump = true;
+            Jumping?.Invoke();
         }
-    }
-
-    public bool GetIsJump() => GetBoolAsTrigger(ref _isJump);
-
-    private bool GetBoolAsTrigger(ref bool value)
-    {
-        bool localValue = value;
-        value = false;
-        return localValue;
     }
 }
