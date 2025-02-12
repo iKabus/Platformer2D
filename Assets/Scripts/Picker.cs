@@ -21,8 +21,6 @@ public class Picker : MonoBehaviour
         {
             _health.TakeHealth();
 
-            Debug.Log("Health + 50");
-
             Destroy(collision.gameObject);
         }
     }

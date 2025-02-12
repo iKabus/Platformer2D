@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackOnApproach : MonoBehaviour
@@ -5,7 +8,7 @@ public class AttackOnApproach : MonoBehaviour
     [SerializeField] private float _attackRange = 5f;
     [SerializeField] private float _damage = 10;
     [SerializeField] private float _attackCooldown = 1f;
-
+    
     private float lastAttackTime;
 
     private void Update()

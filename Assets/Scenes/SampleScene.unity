@@ -421,6 +421,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1605607117694328427, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: _hero
+      value: 
+      objectReference: {fileID: 536657131}
     - target: {fileID: 4568172161597025748, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -925,7 +929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackRange: 5
-  _damage: 10
+  _damage: 1
   _attackCooldown: 1
 --- !u!4 &581117922 stripped
 Transform:
@@ -3191,13 +3195,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 256331300}
     m_Modifications:
+    - target: {fileID: 1100406239060277146, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: _damage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1605607117694328427, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: _hero
+      value: 
+      objectReference: {fileID: 536657131}
     - target: {fileID: 7854097751846817232, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: m_Name
       value: Slime
-      objectReference: {fileID: 0}
-    - target: {fileID: 7854097751846817232, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 9135279696699114805, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: m_LocalPosition.x

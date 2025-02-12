@@ -6,7 +6,7 @@ public class Patrol : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private float _maxDistation;
     
-    private float _startCoordinate;
+    public float _startCoordinate;
 
     private void Start()
     {
