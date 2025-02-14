@@ -1,8 +1,4 @@
-using System.Collections.Generic;
-using NUnit.Framework;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class AttackOnApproach : MonoBehaviour
 {
