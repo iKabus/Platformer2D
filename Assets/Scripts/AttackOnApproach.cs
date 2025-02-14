@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class AttackOnApproach : MonoBehaviour
 {
@@ -13,32 +14,28 @@ public class AttackOnApproach : MonoBehaviour
 
     private void Update()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        foreach (GameObject enemy in enemies)
+        if(Time.time -  lastAttackTime >= _attackCooldown)
         {
-            if (enemy != gameObject)
-            {
-                float distance = Vector2.Distance(transform.position, enemy.transform.position);
-
-                if (distance <= _attackRange && Time.time > lastAttackTime + _attackCooldown)
-                {
-                    Attack(enemy);
-                    lastAttackTime = Time.time;
-                }
-            }
+            Attack();
+            lastAttackTime = Time.time;
         }
     }
 
-    private void Attack(GameObject target)
+    private void Attack()
     {
-        Health targetHealth = target.GetComponent<Health>();
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, _attackRange);
 
-        if (targetHealth != null)
+        foreach (Collider2D enemy in enemies)
         {
-            targetHealth.TakeDamage(_damage);
+            if (enemy.gameObject != gameObject)
+            {
+                Health enemyHealth = enemy.GetComponent<Health>();
 
-            Debug.Log(gameObject.name + " атаковал " + target.name + " и нанес " + _damage + " урона.");
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(_damage);
+                }
+            }
         }
     }
 }

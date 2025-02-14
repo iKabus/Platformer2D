@@ -5,6 +5,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float _maxHealth = 100;
 
     private float _currentHealth;
+    private float _potion = 50;
 
     private void Start()
     {
@@ -23,7 +24,12 @@ public class Health : MonoBehaviour
 
     public void TakeHealth()
     {
-        _currentHealth += 50;
+        _currentHealth += _potion;
+
+        if (_currentHealth > _maxHealth)
+        {
+            _currentHealth = _maxHealth;
+        }
     }
 
     private void Die()
