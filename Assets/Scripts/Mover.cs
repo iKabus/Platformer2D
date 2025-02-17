@@ -6,15 +6,15 @@ public class Mover : MonoBehaviour
 {
     [SerializeField, Min(0.1f)] private float _speed;
 
-    public event Action Moving;
-    public event Action Stoping;
-    public event Action Reflecting;
-
     private Rigidbody2D _rigidBody2D;
 
     private float _minSpeed = 0.1f;
 
     private bool _isRight = true;
+
+    public event Action Moving;
+    public event Action Stoping;
+    public event Action Reflecting;
 
     private void Awake()
     {

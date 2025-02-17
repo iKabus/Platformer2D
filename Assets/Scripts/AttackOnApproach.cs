@@ -1,37 +1,62 @@
+using System.Collections;
 using UnityEngine;
 
 public class AttackOnApproach : MonoBehaviour
 {
-    [SerializeField] private float _attackRange = 5f;
     [SerializeField] private float _damage = 10;
     [SerializeField] private float _attackCooldown = 1f;
-    
-    private float lastAttackTime;
 
-    private void Update()
+    private Coroutine _coroutine;
+
+    private Health _targetHealth;
+
+    private bool _isAttacking = false;
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if(Time.time -  lastAttackTime >= _attackCooldown)
+        if (other.TryGetComponent<Health>(out Health enemy))
         {
-            Attack();
-            lastAttackTime = Time.time;
+            _targetHealth = enemy;
+
+            if (_isAttacking == false)
+            {
+               _coroutine = StartCoroutine(Attacking());
+            }
         }
     }
 
-    private void Attack()
+    private void OnTriggerExit2D(Collider2D other)
     {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, _attackRange);
-
-        foreach (Collider2D enemy in enemies)
+        if (other.TryGetComponent<Health>(out Health enemy) && enemy == _targetHealth)
         {
-            if (enemy.gameObject != gameObject)
-            {
-                Health enemyHealth = enemy.GetComponent<Health>();
+            StopCoroutine(_coroutine);
 
-                if (enemyHealth != null)
-                {
-                    enemyHealth.TakeDamage(_damage);
-                }
-            }
+            _isAttacking = false;
+            _targetHealth = null;
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+        }
+    }
+
+    private IEnumerator Attacking()
+    {
+        var wait = new WaitForSeconds(_attackCooldown);
+
+        _isAttacking = true;
+
+        while (_targetHealth != null)
+        {
+            _targetHealth.TakeDamage(_damage);
+
+            yield return wait;
+        }
+
+        _isAttacking = false;
     }
 }

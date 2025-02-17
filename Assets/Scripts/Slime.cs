@@ -1,15 +1,24 @@
+using System;
 using UnityEngine;
 
-[RequireComponent (typeof(Health))]
-[RequireComponent (typeof(AttackOnApproach))]
 public class Slime : MonoBehaviour
 {
-    private Health _health;
-    private AttackOnApproach _attackOnApproach;
+    public event Action HeroEnter;
+    public event Action HeroLeave;
 
-    private void Awake()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        _health = GetComponent<Health> ();
-        _attackOnApproach = GetComponent<AttackOnApproach> ();
+        if (other.TryGetComponent<Hero>(out _))
+        {
+            HeroEnter?.Invoke();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.TryGetComponent<Hero>(out _))
+        {
+            HeroLeave?.Invoke();
+        }
     }
 }

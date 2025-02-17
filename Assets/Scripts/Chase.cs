@@ -1,19 +1,25 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Patrol))]
+[RequireComponent(typeof(Slime))]
 public class Chase : MonoBehaviour
 {
-    [SerializeField] Hero _hero;
-    [SerializeField] float _speed = 3f;
-    [SerializeField] float _distance = 10f;
+    [SerializeField] private Hero _hero;
+    [SerializeField] private float _speed = 3f;
+    [SerializeField] private float _distance = 10f;
 
     private Patrol _patrol;
+    private Slime _slime;
 
     private Vector2 _startPosition;
+
+    private Coroutine _coroutine;
 
     private void Awake()
     {
         _patrol = GetComponent<Patrol>();
+        _slime = GetComponent<Slime>();
     }
 
     private void Start()
@@ -21,22 +27,40 @@ public class Chase : MonoBehaviour
         _startPosition = transform.position;
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        Chasing();
+        _slime.HeroEnter += StartChasing;
+        _slime.HeroEnter += StopChasing;
     }
 
-    private void Chasing()
+    private void OnDisable()
     {
-        if (_hero != null)
+        _slime.HeroEnter -= StartChasing;
+        _slime.HeroEnter -= StopChasing;
+    }
+
+    private void StartChasing()
+    {
+        _coroutine = StartCoroutine(ChasingForHero());
+    }
+
+    private void StopChasing()
+    {
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+        }
+    }
+
+    private IEnumerator ChasingForHero()
+    {
+        while (_hero != null)
         {
             float distanceToHero = Vector2.Distance(transform.position, _hero.transform.position);
 
             if (distanceToHero < _distance)
             {
                 _patrol.enabled = false;
-
-                Vector2 direction = (_hero.transform.position - transform.position).normalized;
 
                 transform.position = Vector2.MoveTowards(transform.position, _hero.
                     transform.position, _speed * Time.deltaTime);
@@ -50,5 +74,7 @@ public class Chase : MonoBehaviour
                 _patrol.enabled = true;
             }
         }
+
+        yield return null;
     }
 }
