@@ -1,80 +1,57 @@
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Patrol))]
-[RequireComponent(typeof(Slime))]
 public class Chase : MonoBehaviour
 {
     [SerializeField] private Hero _hero;
     [SerializeField] private float _speed = 3f;
-    [SerializeField] private float _distance = 10f;
 
     private Patrol _patrol;
-    private Slime _slime;
 
-    private Vector2 _startPosition;
-
-    private Coroutine _coroutine;
+    private bool _isChasing = false;
 
     private void Awake()
     {
         _patrol = GetComponent<Patrol>();
-        _slime = GetComponent<Slime>();
-    }
-
-    private void Start()
-    {
-        _startPosition = transform.position;
     }
 
     private void OnEnable()
     {
-        _slime.HeroEnter += StartChasing;
-        _slime.HeroEnter += StopChasing;
+        _patrol.HeroDetected += StartChasing;
     }
 
     private void OnDisable()
     {
-        _slime.HeroEnter -= StartChasing;
-        _slime.HeroEnter -= StopChasing;
+        _patrol.HeroDetected -= StartChasing;
+    }
+
+    private void Update()
+    {
+        if (_isChasing)
+        {
+            Chasing();
+        }
     }
 
     private void StartChasing()
     {
-        _coroutine = StartCoroutine(ChasingForHero());
+        _isChasing=true;
+
+        _patrol.enabled = false;
     }
 
-    private void StopChasing()
+    private void Chasing()
     {
-        if (_coroutine != null)
-        {
-            StopCoroutine(_coroutine);
-        }
+        transform.position = Vector2.MoveTowards(transform.position, _hero.transform.position, _speed *  Time.deltaTime);
     }
 
-    private IEnumerator ChasingForHero()
+    private void OnTriggerExit2D(Collider2D other)
     {
-        while (_hero != null)
+        if(other.TryGetComponent<Hero>(out _))
         {
-            float distanceToHero = Vector2.Distance(transform.position, _hero.transform.position);
+            _isChasing = false;
 
-            if (distanceToHero < _distance)
-            {
-                _patrol.enabled = false;
-
-                transform.position = Vector2.MoveTowards(transform.position, _hero.
-                    transform.position, _speed * Time.deltaTime);
-            }
-            else if (_patrol.enabled == false && (Vector2.Distance(transform.position, _startPosition) > 0.1f))
-            {
-                transform.position = Vector2.MoveTowards(transform.position, _startPosition, _speed * Time.deltaTime);
-            }
-            else
-            {
-                _patrol.enabled = true;
-            }
+            _patrol.enabled = true;
         }
-
-        yield return null;
     }
 }
