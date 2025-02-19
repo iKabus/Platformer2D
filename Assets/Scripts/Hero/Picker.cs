@@ -19,7 +19,7 @@ public class Picker : MonoBehaviour
 
         if (collision.GetComponent<Potion>())
         {
-            _health.TakeHealth();
+            _health.Heal();
 
             Destroy(collision.gameObject);
         }

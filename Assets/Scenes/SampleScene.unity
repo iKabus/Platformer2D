@@ -543,6 +543,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1100406239060277146, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: _damage
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1605607117694328427, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: _hero
       value: 
@@ -1045,7 +1049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02d2bcc5dc281849918732dad382dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxValue: 100
 --- !u!114 &536657136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1058,8 +1062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 519a798391bc75c43b1f6c6c2569bccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 5
-  _damage: 5
+  _damage: 10
   _attackCooldown: 1
 --- !u!4 &581117922 stripped
 Transform:
@@ -3588,7 +3591,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1100406239060277146, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: _damage
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1605607117694328427, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: _hero

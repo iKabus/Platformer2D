@@ -20,7 +20,7 @@ public class AttackOnApproach : MonoBehaviour
 
             if (_isAttacking == false)
             {
-               _coroutine = StartCoroutine(Attacking());
+               _coroutine = StartCoroutine(Attack());
             }
         }
     }
@@ -44,7 +44,7 @@ public class AttackOnApproach : MonoBehaviour
         }
     }
 
-    private IEnumerator Attacking()
+    private IEnumerator Attack()
     {
         var wait = new WaitForSeconds(_attackCooldown);
 

@@ -15,34 +15,12 @@ public class Chase : MonoBehaviour
         _patrol = GetComponent<Patrol>();
     }
 
-    private void OnEnable()
-    {
-        _patrol.HeroDetected += StartChasing;
-    }
-
-    private void OnDisable()
-    {
-        _patrol.HeroDetected -= StartChasing;
-    }
-
     private void Update()
     {
         if (_isChasing)
         {
-            Chasing();
+            Purse();
         }
-    }
-
-    private void StartChasing()
-    {
-        _isChasing=true;
-
-        _patrol.enabled = false;
-    }
-
-    private void Chasing()
-    {
-        transform.position = Vector2.MoveTowards(transform.position, _hero.transform.position, _speed *  Time.deltaTime);
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -53,5 +31,27 @@ public class Chase : MonoBehaviour
 
             _patrol.enabled = true;
         }
+    }
+
+    private void OnEnable()
+    {
+        _patrol.HeroDetected += StartChase;
+    }
+
+    private void OnDisable()
+    {
+        _patrol.HeroDetected -= StartChase;
+    }
+
+    private void StartChase()
+    {
+        _isChasing=true;
+
+        _patrol.enabled = false;
+    }
+
+    private void Purse()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, _hero.transform.position, _speed *  Time.deltaTime);
     }
 }
