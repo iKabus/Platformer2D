@@ -54,6 +54,11 @@ public class AttackOnApproach : MonoBehaviour
         {
             _targetHealth.TakeDamage(_damage);
 
+            if (_targetHealth == null)
+            {
+                break;
+            }
+
             yield return wait;
         }
 

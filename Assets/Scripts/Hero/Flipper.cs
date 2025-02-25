@@ -5,6 +5,8 @@ public class Flipper : MonoBehaviour
 {
     private Mover _mover;
 
+    private bool _isReflected = false;
+
     private void Awake()
     {
         _mover = GetComponent<Mover>();
@@ -22,8 +24,10 @@ public class Flipper : MonoBehaviour
 
     private void Reflect()
     {
-        int direction = -1;
+        _isReflected = !_isReflected;
 
-        transform.localScale *= new Vector2(direction, 1);
+        float newRotationY = _isReflected ? 180f : 0f;
+
+        transform.rotation = Quaternion.Euler(0f, newRotationY, 0f);
     }
 }

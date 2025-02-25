@@ -172,7 +172,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 2
-  _maxDistation: 3
+  _pointA: {fileID: 0}
+  _pointB: {fileID: 0}
 --- !u!114 &-8211619840278569696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02d2bcc5dc281849918732dad382dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxValue: 100
 --- !u!114 &1100406239060277146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 519a798391bc75c43b1f6c6c2569bccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 5
   _damage: 5
   _attackCooldown: 1
 --- !u!114 &1605607117694328427
@@ -263,4 +263,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hero: {fileID: 0}
   _speed: 3
-  _distance: 5

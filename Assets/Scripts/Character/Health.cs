@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -6,6 +7,8 @@ public class Health : MonoBehaviour
 
     private float _currentValue;
     private float _healValue = 50;
+
+    public event Action OnCharacterDied;
 
     private void Start()
     {
@@ -18,7 +21,7 @@ public class Health : MonoBehaviour
 
         if (_currentValue <= 0)
         {
-            Die();
+            OnCharacterDied?.Invoke();
         }
     }
 
@@ -30,10 +33,5 @@ public class Health : MonoBehaviour
         {
             _currentValue = _maxValue;
         }
-    }
-
-    private void Die()
-    {
-        Destroy(gameObject);
     }
 }
