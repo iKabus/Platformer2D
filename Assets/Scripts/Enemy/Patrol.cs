@@ -22,7 +22,7 @@ public class Patrol : MonoBehaviour
 
         transform.position = Vector2.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
 
-        if (Vector2.Distance(transform.position, target.position) < 0.1f)
+        if ((transform.position - target.position).sqrMagnitude < 0.1f * 0.1f)
         {
             _movingToB = !_movingToB;
         }

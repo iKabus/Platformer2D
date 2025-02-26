@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent (typeof(Health))]
-public class Picker : MonoBehaviour
+public class Picker : MonoBehaviour, IVisitor
 {
     private Health _health;
 
@@ -12,16 +12,23 @@ public class Picker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Coin>())
-        {
-            Destroy(collision.gameObject);
-        }
+        var visitable = collision.GetComponent<IVisitable>();
 
-        if (collision.GetComponent<Potion>())
+        if (visitable != null)
         {
-            _health.Heal();
-
-            Destroy(collision.gameObject);
+            visitable.Accept(this);
         }
+    }
+
+    public void Visit(Coin coin)
+    {
+        Destroy(coin.gameObject);
+    }
+
+    public void Visit(Potion potion)
+    {
+        _health.Heal();
+
+        Destroy(potion.gameObject);
     }
 }
