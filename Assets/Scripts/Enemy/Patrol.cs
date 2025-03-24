@@ -18,11 +18,13 @@ public class Patrol : MonoBehaviour
 
     private void Patroling()
     {
+        float _value = 0.1f;
+
         Transform target = _movingToB ? _pointB : _pointA;
 
         transform.position = Vector2.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
 
-        if ((transform.position - target.position).sqrMagnitude < 0.1f * 0.1f)
+        if ((transform.position - target.position).sqrMagnitude < _value * _value)
         {
             _movingToB = !_movingToB;
         }

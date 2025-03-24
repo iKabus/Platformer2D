@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Patrol))]
-public class Chase : MonoBehaviour
+public class Chaseer : MonoBehaviour
 {
     [SerializeField] private float _speed = 3f;
 

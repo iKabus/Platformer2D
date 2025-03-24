@@ -33,7 +33,9 @@ public class SmoothSliderHealth : HealthIndicator
 
     private IEnumerator SmoothUpdateSlider()
     {
-        while (Mathf.Abs(_slider.value - _targetValue) > 0.001f)
+        float _value = 0.001f;
+
+        while (Mathf.Abs(_slider.value - _targetValue) > _value)
         {
             _slider.value = Mathf.MoveTowards(_slider.value, _targetValue, _smoothSpeed * Time.deltaTime);
 

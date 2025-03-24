@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StopRotation : MonoBehaviour
+public class RotationStop : MonoBehaviour
 {
     private RectTransform _rectTransform;
 
