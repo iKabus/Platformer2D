@@ -12,12 +12,12 @@ public class CharacterDestroyer : MonoBehaviour
 
     private void OnEnable()
     {
-        _health.OnCharacterDied += Delete;
+        _health.CharacterDied += Delete;
     }
 
     private void OnDisable()
     {
-        _health.OnCharacterDied -= Delete;
+        _health.CharacterDied -= Delete;
     }
 
     private void Delete()

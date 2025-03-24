@@ -27,7 +27,9 @@ public class Picker : MonoBehaviour, IVisitor
 
     public void Visit(Potion potion)
     {
-        _health.Heal();
+        float _valueHeal = 90f;
+
+        _health.Heal(_valueHeal);
 
         Destroy(potion.gameObject);
     }
