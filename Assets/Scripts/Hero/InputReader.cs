@@ -8,6 +8,7 @@ public class InputReader : MonoBehaviour
     public float Direction { get; private set; } = 0;
     
     public event Action Jumping;
+    public event Action Vampiring;
 
     private void Update()
     {
@@ -16,6 +17,11 @@ public class InputReader : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jumping?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Vampiring?.Invoke();
         }
     }
 }
