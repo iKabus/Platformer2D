@@ -959,6 +959,8 @@ GameObject:
   - component: {fileID: 536657142}
   - component: {fileID: 536657141}
   - component: {fileID: 536657143}
+  - component: {fileID: 536657144}
+  - component: {fileID: 536657145}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Enemy
@@ -1357,8 +1359,32 @@ MonoBehaviour:
   _damagePerSecond: 10
   _healPerSecond: 5
   _radius: 5
-  _radiusIndicator: {fileID: 1212913797}
+--- !u!114 &536657144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536657120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58d7754fcfa690d44b6ded4f9861859e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _cooldownText: {fileID: 302765246}
+--- !u!114 &536657145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536657120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caf8fdc0c291813498207ed82737dbab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radiusIndicator: {fileID: 1212913797}
 --- !u!4 &581117922 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7053313275729042564, guid: dbeed9e4bbb13e840866c2d8f168a273, type: 3}

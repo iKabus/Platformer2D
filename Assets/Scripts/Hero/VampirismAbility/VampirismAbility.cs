@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using System.Collections;
 
@@ -11,31 +10,32 @@ public class VampirismAbility : MonoBehaviour
     [SerializeField] private float _healPerSecond = 5f;
     [SerializeField] private float _radius = 5f;
 
-    [Header("Visuals")]
-    [SerializeField] private GameObject _radiusIndicator;
-    [SerializeField] private TextMeshProUGUI _cooldownText;
+    private AbilityTimer _timer;
+    private Health _playerHealth;
+    private CooldownDisplay _cooldownDisplay;
+    private AbilityRadiusDisplay _radiusDisplay;
+    private EnemyFinder _enemyFinder;
 
     private bool _isAbilityActive = false;
     private bool _isOnCooldown = false;
-    private float _currentTimer = 0f;
 
-    private Health _playerHealth;
-    private Transform _nearestEnemy;
     private Coroutine _abilityCoroutine;
+
+    public float GetRadius() => _radius;
 
     private void Awake()
     {
-        int value = 2;
-
         _playerHealth = GetComponent<Health>();
+        _cooldownDisplay = GetComponent<CooldownDisplay>();
+        _radiusDisplay = GetComponent<AbilityRadiusDisplay>();
+        _enemyFinder = new EnemyFinder(transform, _radius);
 
-        _radiusIndicator.transform.localScale = new Vector3(_radius * value, _radius * value, 1);
-        _radiusIndicator.SetActive(false);
+        _timer = new AbilityTimer();
     }
 
     private void Update()
     {
-        UpdateCooldownText();
+        _cooldownDisplay.UpdateDisplay(_timer, _isAbilityActive, _isOnCooldown);
     }
 
     public void HandleAbility()
@@ -46,6 +46,7 @@ public class VampirismAbility : MonoBehaviour
             {
                 StopCoroutine(_abilityCoroutine);
             }
+
             _abilityCoroutine = StartCoroutine(AbilityCoroutine());
         }
     }
@@ -53,16 +54,16 @@ public class VampirismAbility : MonoBehaviour
     private IEnumerator AbilityCoroutine()
     {
         _isAbilityActive = true;
-        _radiusIndicator.SetActive(true);
-        _currentTimer = _abilityDuration;
+        _radiusDisplay.Show();
+        _timer.Start(_abilityDuration);
 
-        while (_currentTimer > 0f)
+        while (_timer.IsRunning)
         {
-            FindNearestEnemy();
+            _enemyFinder.FindNearest();
 
-            if (_nearestEnemy != null)
+            if (_enemyFinder.NearestEnemy != null)
             {
-                Health enemyHealth = _nearestEnemy.GetComponent<Health>();
+                Health enemyHealth = _enemyFinder.NearestEnemy.GetComponent<Health>();
 
                 if (enemyHealth != null)
                 {
@@ -72,76 +73,27 @@ public class VampirismAbility : MonoBehaviour
                 }
             }
 
-            _currentTimer -= Time.deltaTime;
-
+            _timer.Update();
             yield return null;
         }
 
         _isAbilityActive = false;
-        _nearestEnemy = null;
-        _radiusIndicator.SetActive(false);
+        _radiusDisplay.Hide();
 
         _isOnCooldown = true;
-        _currentTimer = _cooldownDuration;
+        _timer.Start(_cooldownDuration);
 
-        while (_currentTimer > 0f)
+        while (_timer.IsRunning)
         {
-            _currentTimer -= Time.deltaTime;
-
+            _timer.Update();
             yield return null;
         }
 
         _isOnCooldown = false;
     }
 
-    private void FindNearestEnemy()
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius);
-
-        float minDistance = float.MaxValue;
-        _nearestEnemy = null;
-
-        foreach (var hit in hits)
-        {
-            if (hit.gameObject == gameObject) continue;
-
-            if (hit.TryGetComponent<Health>(out Health enemy))
-            {
-                float distance = Vector2.Distance(transform.position, hit.transform.position);
-
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    _nearestEnemy = hit.transform;
-                }
-            }
-        }
-    }
-
-    private void UpdateCooldownText()
-    {
-        if (_isAbilityActive)
-        {
-            _cooldownText.text = Mathf.Ceil(_currentTimer).ToString();
-            _cooldownText.color = Color.red;
-        }
-        else if (_isOnCooldown)
-        {
-            _cooldownText.text = Mathf.Ceil(_currentTimer).ToString();
-            _cooldownText.color = Color.yellow;
-        }
-        else
-        {
-            _cooldownText.text = "READY";
-            _cooldownText.color = Color.green;
-        }
-
-        _cooldownText.transform.rotation = Quaternion.identity;
-    }
-
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _radius);
+        _enemyFinder?.DrawGizmos();
     }
 }
