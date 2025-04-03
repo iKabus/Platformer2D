@@ -3,13 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class HeroAnimator : MonoBehaviour
 {
-    private const string IsRunning = nameof(IsRunning);
-    private const string IsStop = nameof(IsStop);
+    private const string IsRunning = "IsRunning";
+    private const string IsStop = "IsStop";
 
     private Animator _animator;
 
-    private int _isRunningHash = Animator.StringToHash(nameof(IsRunning));
-    private int _isStopHash = Animator.StringToHash(nameof(IsStop));
+    private readonly int _isRunningHash = Animator.StringToHash(IsRunning);
+    private readonly int _isStopHash = Animator.StringToHash(IsStop);
 
     private void Awake()
     {

@@ -12,9 +12,10 @@ public class VampirismAbility : MonoBehaviour
 
     private AbilityTimer _timer;
     private Health _playerHealth;
-    private CooldownDisplay _cooldownDisplay;
     private AbilityRadiusDisplay _radiusDisplay;
     private EnemyFinder _enemyFinder;
+    private Transform _enemy;
+    private CooldownDisplay _cooldownDisplay;
 
     private bool _isAbilityActive = false;
     private bool _isOnCooldown = false;
@@ -26,17 +27,16 @@ public class VampirismAbility : MonoBehaviour
     private void Awake()
     {
         _playerHealth = GetComponent<Health>();
-        _cooldownDisplay = GetComponent<CooldownDisplay>();
         _radiusDisplay = GetComponent<AbilityRadiusDisplay>();
-        _enemyFinder = new EnemyFinder(transform, _radius);
+        _cooldownDisplay = GetComponent<CooldownDisplay>();
+
+        LayerMask enemyLayer = LayerMask.GetMask("Enemy");
+        
+        _enemyFinder = new EnemyFinder(transform, _radius, enemyLayer);
 
         _timer = new AbilityTimer();
     }
 
-    private void Update()
-    {
-        _cooldownDisplay.UpdateDisplay(_timer, _isAbilityActive, _isOnCooldown);
-    }
 
     public void HandleAbility()
     {
@@ -54,16 +54,20 @@ public class VampirismAbility : MonoBehaviour
     private IEnumerator AbilityCoroutine()
     {
         _isAbilityActive = true;
+
+        _cooldownDisplay.StartAbility(_abilityDuration);
+
         _radiusDisplay.Show();
+        
         _timer.Start(_abilityDuration);
 
         while (_timer.IsRunning)
         {
-            _enemyFinder.FindNearest();
+            _enemy = _enemyFinder.FindNearest();
 
-            if (_enemyFinder.NearestEnemy != null)
+            if (_enemy != null)
             {
-                Health enemyHealth = _enemyFinder.NearestEnemy.GetComponent<Health>();
+                Health enemyHealth = _enemy.GetComponent<Health>();
 
                 if (enemyHealth != null)
                 {
@@ -78,9 +82,11 @@ public class VampirismAbility : MonoBehaviour
         }
 
         _isAbilityActive = false;
+        _cooldownDisplay.StartCooldown(_cooldownDuration);
         _radiusDisplay.Hide();
 
         _isOnCooldown = true;
+
         _timer.Start(_cooldownDuration);
 
         while (_timer.IsRunning)

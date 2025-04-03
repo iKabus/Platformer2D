@@ -286,7 +286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 256331300}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -709,10 +709,18 @@ PrefabInstance:
       propertyPath: _damage
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1306193799081050087, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1605607117694328427, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: _hero
       value: 
       objectReference: {fileID: 536657131}
+    - target: {fileID: 1756008912546730741, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2692386179392467077, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: _pointA
       value: 
@@ -729,13 +737,29 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4370626379396915220, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4568172161597025748, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6222302947766831788, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202874039099312048, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7854097751846817232, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: m_Name
       value: Slime (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854097751846817232, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7854097751846817232, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: m_TagString
@@ -4248,6 +4272,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 1306193799081050087, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756008912546730741, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2692386179392467077, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: _pointA
       value: 
@@ -4264,9 +4296,25 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4370626379396915220, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222302947766831788, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202874039099312048, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7854097751846817232, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: m_Name
       value: Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854097751846817232, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9135279696699114805, guid: e54108b8109680d439d9de7ce00a15ae, type: 3}
       propertyPath: m_LocalPosition.x

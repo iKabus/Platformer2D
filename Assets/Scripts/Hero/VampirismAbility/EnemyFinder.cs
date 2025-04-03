@@ -4,38 +4,50 @@ public class EnemyFinder
 {
     private readonly Transform _owner;
     private readonly float _radius;
+    private readonly float _radiusSquared;
+    private readonly LayerMask _targetLayer;
+    private readonly Collider2D[] _hitsBuffer = new Collider2D[3];
 
-    public Transform NearestEnemy { get; private set; }
-
-    public EnemyFinder(Transform owner, float radius)
+    public EnemyFinder(Transform owner, float radius, LayerMask targetLayer)
     {
         _owner = owner;
         _radius = radius;
+        _radiusSquared = radius * radius;
+        _targetLayer = targetLayer;
     }
 
-    public void FindNearest()
+    public Transform FindNearest()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(_owner.position, _radius);
+        int hitsCount = Physics2D.OverlapCircleNonAlloc(
+            _owner.position,
+            _radius,
+            _hitsBuffer,
+            _targetLayer
+        );
 
-        float minDistance = float.MaxValue;
+        Transform nearestEnemy = null;
+        float minDistanceSquared = float.MaxValue;
 
-        NearestEnemy = null;
-
-        foreach (var hit in hits)
+        for (int i = 0; i < hitsCount; i++)
         {
-            if (hit.gameObject == _owner.gameObject) continue;
+            Collider2D hit = _hitsBuffer[i];
+            if (hit.gameObject == _owner.gameObject)
+                continue;
 
-            if (hit.TryGetComponent<Health>(out Health enemy))
+            if (hit.TryGetComponent<Health>(out _))
             {
-                float distance = Vector2.Distance(_owner.position, hit.transform.position);
+                Vector2 direction = hit.transform.position - _owner.position;
+                float distanceSquared = direction.sqrMagnitude;
 
-                if (distance < minDistance)
+                if (distanceSquared <= _radiusSquared && distanceSquared < minDistanceSquared)
                 {
-                    minDistance = distance;
-                    NearestEnemy = hit.transform;
+                    minDistanceSquared = distanceSquared;
+                    nearestEnemy = hit.transform;
                 }
             }
         }
+
+        return nearestEnemy;
     }
 
     public void DrawGizmos()
